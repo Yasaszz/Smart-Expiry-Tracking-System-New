@@ -1,0 +1,43 @@
+{
+  "name": "smart-parmacy-expiry",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite --host --open",
+    "build": "tsc --noEmit && vite build",
+    "start": "bini-server",
+    "preview": "vite preview --host --open",
+    "deploy": "bini-deploy",
+    "clean": "npx create-bini-app clean",
+    "upgrade": "npx create-bini-app upgrade",
+    "type-check": "tsc --noEmit",
+    "lint": "oxlint src",
+    "format": "oxfmt src",
+    "check": "oxlint src && oxfmt src && tsc --noEmit"
+  },
+  "dependencies": {
+    "bini-env": "^2.0.1",
+    "bini-router": "^2.2.2",
+    "bini-server": "^2.0.2",
+    "firebase": "^13.4.0",
+    "hono": "^4.13.22",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "bini-deploy": "^2.1.1",
+    "bini-overlay": "^2.1.2",
+    "bini-ssg": "^2.0.5",
+    "oxfmt": "^0.80.0",
+    "oxlint": "^1.95.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}
