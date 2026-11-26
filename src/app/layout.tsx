@@ -274,7 +274,7 @@ export default function RootLayout({
   const workspace =
     /^\/(dashboard|products|stock|promotions|reports|notifications|batches|suppliers|purchase-orders|supplier-returns|insights)(\/|$)/.test(
       location.pathname
-    ) || !!user
+    )
   const navigate = useNavigate()
   useEffect(() => {
     if (!workspace || !open || window.matchMedia('(min-width: 1024px)').matches) return
@@ -557,7 +557,7 @@ export default function RootLayout({
               </div>
             </footer>
           </div>
-          {user && <StoreAssistant key={user.uid} />}
+          {workspace && user && <StoreAssistant key={user.uid} />}
         </div>
       </InventoryProvider>
     </AuthContext.Provider>

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
+import { useAuth } from '../../lib/app-context'
 import { getErrorMessage, loginWithGoogle, registerWithEmail } from '../../lib/firebase'
 import { AuthFrame } from '../../lib/ui'
 import { buttonClass, secondaryClass, inputClass, ErrorNotice } from '../layout'
@@ -13,14 +14,13 @@ export default function RegisterPage() {
   const [confirm, setConfirm] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const { user } = useAuth()
   async function registerWithGoogle() {
     if (busy) return
     setBusy(true)
     setError('')
     try {
       await loginWithGoogle()
-      navigate('/dashboard', { replace: true })
     } catch (cause) {
       setError(getErrorMessage(cause))
     } finally {
@@ -38,13 +38,13 @@ export default function RegisterPage() {
     setError('')
     try {
       await registerWithEmail(name, email, password)
-      navigate('/dashboard', { replace: true })
     } catch (cause) {
       setError(getErrorMessage(cause))
     } finally {
       setBusy(false)
     }
   }
+  if (user && !busy && !error) return <Navigate to="/dashboard" replace />
   return (
     <AuthFrame>
       <h1 className="text-2xl font-semibold tracking-tight">Create account</h1>

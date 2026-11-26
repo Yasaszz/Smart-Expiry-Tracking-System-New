@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 
+import { useAuth } from '../../lib/app-context'
 import { getErrorMessage, loginWithEmail, loginWithGoogle } from '../../lib/firebase'
 import { AuthFrame } from '../../lib/ui'
 import { buttonClass, secondaryClass, inputClass, ErrorNotice } from '../layout'
@@ -11,7 +12,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const { user } = useAuth()
   const location = useLocation()
   const requested = (location.state as { from?: string } | null)?.from
   const destination = [
@@ -36,7 +37,6 @@ export default function LoginPage() {
     try {
       if (google) await loginWithGoogle()
       else await loginWithEmail(email, password)
-      navigate(destination, { replace: true })
     } catch (cause) {
       setError(getErrorMessage(cause))
     } finally {
@@ -47,6 +47,7 @@ export default function LoginPage() {
     event.preventDefault()
     void login(false)
   }
+  if (user && !busy && !error) return <Navigate to={destination} replace />
   return (
     <AuthFrame>
       <h1 className="text-2xl font-semibold tracking-tight">Sign in</h1>
